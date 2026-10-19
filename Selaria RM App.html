@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selaria RM - Sistema de Gestão</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        saddle: {
+                            50: '#fdf8f4',
+                            100: '#f9eee4',
+                            200: '#f2dac7',
+                            300: '#e5bc9f',
+                            400: '#d59874',
+                            500: '#c57850',
+                            600: '#b76144',
+                            700: '#984a37',
+                            800: '#7b3e32',
+                            900: '#431f1a',
+                            950: '#2d120f',
+                        },
+                        leather: {
+                            base: '#4a2c11',
+                            dark: '#2d1808',
+                            light: '#8c592b',
+                            accent: '#d4a359',
+                            cream: '#f5efe6'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #1a0f0a;
+            color: #f5efe6;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+        .leather-card {
+            background: linear-gradient(145deg, #2d1808, #3b200b);
+            border: 1px solid #5a3818;
+        }
+        .leather-border {
+            border: 2px dashed #8c592b;
+        }
+    </style>
+</head>
+<body class="flex justify-center min-h-screen pb-20 md:pb-0">
+
+    <!-- Mobile Container -->
+    <div class="w-full max-w-md bg-[#231207] min-h-screen flex flex-col shadow-2xl relative border-x border-[#3b200b]">
+
+        <!-- Header -->
+        <header class="bg-[#1a0f0a] border-b border-[#5a3818] p-4 sticky top-0 z-50 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-leather-accent flex items-center justify-center text-leather-dark font-bold text-xl shadow-md border border-amber-200">
+                    RM
+                </div>
+                <div>
+                    <h1 class="font-bold text-amber-100 text-lg tracking-wide flex items-center gap-1">
+                        SELARIA RM
+                        <i data-lucide="shield-check" class="w-4 h-4 text-leather-accent"></i>
+                    </h1>
+                    <p class="text-xs text-amber-400/80">Arte em Couro Rústico</p>
+                </div>
+            </div>
+            <button onclick="switchTab('calculator')" class="bg-[#3b200b] hover:bg-[#5a3818] text-amber-200 text-xs px-3 py-1.5 rounded-lg border border-[#8c592b] flex items-center gap-1 transition">
+                <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
+                Orçar
+            </button>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 p-4 overflow-y-auto pb-24">
+
+            <!-- TAB 1: DASHBOARD / INÍCIO -->
+            <section id="tab-dashboard" class="space-y-4">
+                <!-- Banner de Boas-Vindas -->
+                <div class="leather-card rounded-2xl p-4 relative overflow-hidden">
+                    <div class="relative z-10">
+                        <span class="text-xs font-semibold text-leather-accent uppercase tracking-wider">Painel do Ateliê</span>
+                        <h2 class="text-xl font-bold text-amber-100 mt-0.5">Olá, Mestre Artesão!</h2>
+                        <p class="text-xs text-amber-200/70 mt-1">Você tem <span class="text-amber-400 font-bold">3 pedidos</span> para finalizar esta semana.</p>
+                    </div>
+                    <i data-lucide="hammer" class="absolute -right-2 -bottom-2 w-24 h-24 text-amber-900/20 rotate-12"></i>
+                </div>
+
+                <!-- Métricas -->
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="leather-card p-3 rounded-xl">
+                        <div class="flex items-center gap-2 text-amber-400 mb-1">
+                            <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                            <span class="text-xs font-medium">Pedidos Ativos</span>
+                        </div>
+                        <p class="text-2xl font-bold text-amber-100">5</p>
+                        <span class="text-[10px] text-emerald-400 flex items-center gap-0.5 mt-1">
+                            <i data-lucide="trending-up" class="w-3 h-3"></i> 2 prontos p/ entrega
+                        </span>
+                    </div>
+                    <div class="leather-card p-3 rounded-xl">
+                        <div class="flex items-center gap-2 text-amber-400 mb-1">
+                            <i data-lucide="dollar-sign" class="w-4 h-4"></i>
+                            <span class="text-xs font-medium">Previsto (Mês)</span>
+                        </div>
+                        <p class="text-2xl font-bold text-amber-100">R$ 2.850</p>
+                        <span class="text-[10px] text-amber-300/60 mt-1 block">Meta: R$ 4.000</span>
+                    </div>
+                </div>
+
+                <!-- Ações Rápidas -->
+                <div class="grid grid-cols-3 gap-2">
+                    <button onclick="switchTab('orders')" class="bg-[#2d1808] hover:bg-[#3b200b] border border-[#5a3818] p-3 rounded-xl flex flex-col items-center justify-center gap-1.5 transition">
+                        <i data-lucide="plus-circle" class="w-5 h-5 text-leather-accent"></i>
+                        <span class="text-[11px] font-medium text-amber-100">Novo Pedido</span>
+                    </button>
+                    <button onclick="switchTab('calculator')" class="bg-[#2d1808] hover:bg-[#3b200b] border border-[#5a3818] p-3 rounded-xl flex flex-col items-center justify-center gap-1.5 transition">
+                        <i data-lucide="calculator" class="w-5 h-5 text-leather-accent"></i>
+                        <span class="text-[11px] font-medium text-amber-100">Calculadora</span>
+                    </button>
+                    <button onclick="switchTab('schedule')" class="bg-[#2d1808] hover:bg-[#3b200b] border border-[#5a3818] p-3 rounded-xl flex flex-col items-center justify-center gap-1.5 transition">
+                        <i data-lucide="calendar" class="w-5 h-5 text-leather-accent"></i>
+                        <span class="text-[11px] font-medium text-amber-100">Agenda</span>
+                    </button>
+                </div>
+
+                <!-- Entregas Próximas -->
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-sm font-bold text-amber-200 flex items-center gap-1.5">
+                            <i data-lucide="clock" class="w-4 h-4 text-leather-accent"></i>
+                            Próximas Entregas
+                        </h3>
+                        <button onclick="switchTab('orders')" class="text-xs text-amber-400 hover:underline">Ver todos</button>
+                    </div>
+
+                    <!-- Card Pedido 1 -->
+                    <div class="leather-card p-3 rounded-xl flex items-center justify-between">
+                        <div class="space-y-1">
+                            <div class="flex items-center gap-2">
+                                <span class="bg-amber-900/60 text-amber-300 text-[10px] px-2 py-0.5 rounded font-mono border border-amber-700/40">#0104</span>
+                                <h4 class="text-sm font-bold text-amber-100">Cinto Rústico Customizado</h4>
+                            </div>
+                            <p class="text-xs text-amber-300/70">Cliente: João da Silva</p>
+                            <span class="inline-block text-[10px] bg-yellow-900/40 text-yellow-300 border border-yellow-700/50 px-2 py-0.5 rounded-full">
+                                Na Bancada
+                            </span>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-xs font-semibold text-amber-200 block">25/10</span>
+                            <span class="text-xs font-bold text-emerald-400">R$ 180,00</span>
+                        </div>
+                    </div>
+
+                    <!-- Card Pedido 2 -->
+                    <div class="leather-card p-3 rounded-xl flex items-center justify-between">
+                        <div class="space-y-1">
+                            <div class="flex items-center gap-2">
+                                <span class="bg-amber-900/60 text-amber-300 text-[10px] px-2 py-0.5 rounded font-mono border border-amber-700/40">#0105</span>
+                                <h4 class="text-sm font-bold text-amber-100">Bainha de Faca de Caça</h4>
+                            </div>
+                            <p class="text-xs text-amber-300/70">Cliente: Marcos Pampa</p>
+                            <span class="inline-block text-[10px] bg-emerald-900/40 text-emerald-300 border border-emerald-700/50 px-2 py-0.5 rounded-full">
+                                Acabamento
+                            </span>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-xs font-semibold text-amber-200 block">28/10</span>
+                            <span class="text-xs font-bold text-emerald-400">R$ 120,00</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: CALCULADORA DE ORÇAMENTOS -->
+            <section id="tab-calculator" class="space-y-4 hidden">
+                <div class="border-b border-[#5a3818] pb-2">
+                    <h2 class="text-lg font-bold text-amber-100 flex items-center gap-2">
+                        <i data-lucide="calculator" class="w-5 h-5 text-leather-accent"></i>
+                        Calculadora de Preço
+                    </h2>
+                    <p class="text-xs text-amber-300/70">Calcule os custos exatos da peça com base em insumos e horas de trabalho.</p>
+                </div>
+
+                <form id="calc-form" oninput="calculatePrice()" class="space-y-4">
+                    <!-- Bloco Couro -->
+                    <div class="leather-card p-3 rounded-xl space-y-3">
+                        <h3 class="text-xs font-bold text-leather-accent uppercase tracking-wider flex items-center gap-1">
+                            <i data-lucide="layers" class="w-3.5 h-3.5"></i>
+                            1. Matéria-Prima (Couro)
+                        </h3>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="text-[11px] text-amber-200 block mb-1">Tipo de Couro</label>
+                                <select id="leather-type" class="w-full bg-[#1a0f0a] border border-[#5a3818] rounded-lg p-2 text-xs text-amber-100 focus:outline-none focus:border-leather-accent">
+                                    <option value="45">Soleta Tanino 3.5mm (R$ 45/dm²)</option>
+                                    <option value="35">Couro Bovino Flor (R$ 35/dm²)</option>
+                                    <option value="25">Camurça / Pelica (R$ 25/dm²)</option>
+                                    <option value="60">Couro Exótico (R$ 60/dm²)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="text-[11px] text-amber-200 block mb-1">Área Usada (dm²)</label>
+                                <input type="number" id="leather-area" value="3" min="0.1" step="0.1" class="w-full bg-[#1a0f0a] border border-[#5a3818] rounded-lg p-2 text-xs text-amber-100 focus:outline-none focus:border-leather-accent">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bloco Ferragens e Insumos -->
+                    <div class="leather-card p-3 rounded-xl space-y-3">
+                        <h3 class="text-xs font-bold text-leather-accent uppercase tracking-wider flex items-center gap-1">
+                            <i data-lucide="wrench" class="w-3.5 h-3.5"></i>
+                            2. Ferragens & Consumíveis
+                        </h3>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="text-[11px] text-amber-200 block mb-1">Ferragens/Fivelas (R$)</label>
+                                <input type="number" id="hardware-cost" value="15" min="0" class="w-full bg-[#1a0f0a] border border-[#5a3818] rounded-lg p-2 text-xs text-amber-100 focus:outline-none focus:border-leather-accent">
+                            </div>
+                            <div>
+                                <label class="text-[11px] text-amber-200 block mb-1">Linha/Cola/Tinta (R$)</label>
+                                <input type="number" id="supplies-cost" value="6" min="0" class="w-full bg-[#1a0f0a] border border-[#5a3818] rounded-lg p-2 text-xs text-amber-100 focus:outline-none focus:border-leather-accent">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bloco Mão de Obra -->
+                    <div class="leather-card p-3 rounded-xl space-y-3">
+                        <h3 class="text-xs font-bold text-leather-accent uppercase tracking-wider flex items-center gap-1">
+                            <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+                            3. Tempo de Produção
+                        </h3>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="text-[11px] text-amber-200 block mb-1">Valor/Hora (R$)</label>
+                                <input type="number" id="hourly-rate" value="25" min="0" class="w-full bg-[#1a0f0a] border border-[#5a3818] rounded-lg p-2 text-xs text-amber-100 focus:outline-none focus:border-leather-accent">
+                            </div>
+                            <div>
+                                <label class="text-[11px] text-amber-200 block mb-1">Horas Gastas</label>
+                                <input type="number" id="production-hours" value="2.5" min="0.1" step="0.5" class="w-full bg-[#1a0f0a] border border-[#5a3818] rounded-lg p-2 text-xs text-amber-100 focus:outline-none focus:border-leather-accent">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bloco Margem de Lucro -->
+                    <div class="leather-card p-3 rounded-xl space-y-3">
+                        <h3 class="text-xs font-bold text-leather-accent uppercase tracking-wider flex items-center gap-1">
+                            <i data-lucide="trending-up" class="w-3.5 h-3.5"></i>
+                            4. Margem de Lucro (%)
+                        </h3>
+                        <div>
+                            <input type="range" id="profit-margin" min="20" max="150" value="50" class="w-full accent-leather-accent">
+                            <div class="flex justify-between text-xs text-amber-300 mt-1">
+                                <span>20%</span>
+                                <span id="margin-val" class="font-bold text-leather-accent">50%</span>
+                                <span>150%</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Resumo dos Resultados -->
+                <div class="bg-[#1a0f0a] border-2 border-leather-accent/60 p-4 rounded-xl space-y-2">
+                    <div class="flex justify-between text-xs text-amber-300/80">
+                        <span>Custo Total de Materiais:</span>
+                        <span id="res-materials" class="font-mono">R$ 156,00</span>
+                    </div>
+                    <div class="flex justify-between text-xs text-amber-300/80">
+                        <span>Custo Mão de Obra:</span>
+                        <span id="res-labor" class="font-mono">R$ 62,50</span>
+                    </div>
+                    <div class="flex justify-between text-xs text-amber-300/80">
+                        <span>Despesas Fixas da Oficina (10%):</span>
+                        <span id="res-overhead" class="font-mono">R$ 21,85</span>
+                    </div>
+                    <hr class="border-[#5a3818] my-1">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-bold text-amber-100">PREÇO SUGERIDO DE VENDA:</span>
+                        <span id="res-total" class="text-xl font-extrabold text-emerald-400 font-mono">R$ 360,50</span>
+                    </div>
+                </div>
+
+                <button onclick="alert('Orçamento copiado para a área de transferência!')" class="w-full bg-saddle-600 hover:bg-saddle-700 text-amber-100 font-bold py-2.5 rounded-xl border border-saddle-400 flex items-center justify-center gap-2 shadow-lg transition">
+                    <i data-lucide="share-2" class="w-4 h-4"></i>
+                    Gerar Orçamento / Copiar
+                </button>
+            </section>
+
+            <!-- TAB 3: PEDIDOS / FICHA TÉCNICA -->
+            <section id="tab-orders" class="space-y-4 hidden">
+                <div class="flex justify-between items-center border-b border-[#5a3818] pb-2">
+                    <div>
+                        <h2 class="text-lg font-bold text-amber-100 flex items-center gap-2">
+                            <i data-lucide="clipboard-list" class="w-5 h-5 text-leather-accent"></i>
+                            Caderno de Pedidos
+                        </h2>
+                        <p class="text-xs text-amber-300/70">Especificações técnicas dos trabalhos de couro.</p>
+                    </div>
+                    <button onclick="alert('Modal de novo pedido')" class="bg-saddle-700 hover:bg-saddle-600 text-amber-100 p-2 rounded-lg text-xs flex items-center gap-1 border border-saddle-500">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- Detalhe da Ficha do Pedido #0104 -->
+                <div class="leather-card rounded-2xl p-4 space-y-3 relative border-2 border-leather-accent/40">
+                    <div class="flex justify-between items-start border-b border-[#5a3818] pb-2">
+                        <div>
+                            <span class="bg-amber-900/80 text-amber-300 text-xs px-2 py-0.5 rounded font-mono border border-amber-600/50">PEDIDO #0104</span>
+                            <h3 class="text-base font-bold text-amber-100 mt-1">Cinto Rústico Customizado</h3>
+                            <p class="text-xs text-amber-300/80">Cliente: João da Silva | (11) 98888-7777</p>
+                        </div>
+                        <span class="bg-yellow-900/60 text-yellow-300 text-[11px] px-2.5 py-1 rounded-full border border-yellow-600/40">
+                            Na Bancada
+                        </span>
+                    </div>
+
+                    <!-- Detalhes Técnicos -->
+                    <div class="space-y-2 text-xs">
+                        <h4 class="font-bold text-leather-accent uppercase text-[10px] tracking-wider">Ficha Técnica do Couro</h4>
+                        <div class="grid grid-cols-2 gap-2 bg-[#1a0f0a]/60 p-2.5 rounded-lg border border-[#5a3818]">
+                            <div>
+                                <span class="text-amber-400/70 block text-[10px]">TIPO DE COURO</span>
+                                <span class="text-amber-100 font-medium">Soleta Tanino 3.8mm</span>
+                            </div>
+                            <div>
+                                <span class="text-amber-400/70 block text-[10px]">COR / TINGIMENTO</span>
+                                <span class="text-amber-100 font-medium">Castanho Rústico</span>
+                            </div>
+                            <div>
+                                <span class="text-amber-400/70 block text-[10px]">TIPO DE COSTURA</span>
+                                <span class="text-amber-100 font-medium">Manual (Ponto Selador)</span>
+                            </div>
+                            <div>
+                                <span class="text-amber-400/70 block text-[10px]">LINHA & ACABAMENTO</span>
+                                <span class="text-amber-100 font-medium">Bege N° 4 / Goma Trag.</span>
+                            </div>
+                        </div>
+
+                        <h4 class="font-bold text-leather-accent uppercase text-[10px] tracking-wider pt-1">Medidas & Personalização</h4>
+                        <div class="bg-[#1a0f0a]/60 p-2.5 rounded-lg border border-[#5a3818] space-y-1">
+                            <p class="text-amber-200"><strong class="text-amber-400">Tamanho Cinto:</strong> 110 cm (fivela ao furo central)</p>
+                            <p class="text-amber-200"><strong class="text-amber-400">Iniciais Estampadas:</strong> "J.S." (Furo Central)</p>
+                            <p class="text-amber-200"><strong class="text-amber-400">Fivela:</strong> Inox Oitavada 38mm</p>
+                        </div>
+                    </div>
+
+                    <!-- Financeiro do Pedido -->
+                    <div class="flex justify-between items-center pt-2 border-t border-[#5a3818]">
+                        <div>
+                            <span class="text-[10px] text-amber-300/70 block">Sinal de 50% Pago</span>
+                            <span class="text-xs font-bold text-emerald-400">R$ 90,00 de R$ 180,00</span>
+                        </div>
+                        <button onclick="alert('Atualizando status...')" class="bg-[#3b200b] hover:bg-[#5a3818] text-amber-200 text-xs px-3 py-1.5 rounded-lg border border-[#8c592b]">
+                            Atualizar Status
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 4: AGENDA / CRONOGRAMA -->
+            <section id="tab-schedule" class="space-y-4 hidden">
+                <div class="border-b border-[#5a3818] pb-2">
+                    <h2 class="text-lg font-bold text-amber-100 flex items-center gap-2">
+                        <i data-lucide="calendar" class="w-5 h-5 text-leather-accent"></i>
+                        Agenda da Oficina
+                    </h2>
+                    <p class="text-xs text-amber-300/70">Prazos de entrega e compras de material.</p>
+                </div>
+
+                <div class="leather-card p-3 rounded-xl space-y-3">
+                    <div class="flex justify-between items-center text-sm font-bold text-amber-100">
+                        <button class="p-1 text-amber-400">&lt;</button>
+                        <span>Outubro 2026</span>
+                        <button class="p-1 text-amber-400">&gt;</button>
+                    </div>
+
+                    <!-- Agenda Mini Lista -->
+                    <div class="space-y-2 text-xs">
+                        <div class="flex items-center gap-3 bg-[#1a0f0a] p-2.5 rounded-lg border-l-4 border-amber-500">
+                            <div class="text-center font-bold text-amber-300 w-10">
+                                <span class="block text-sm">25</span>
+                                <span class="text-[9px] uppercase">OUT</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-amber-100">Entrega: Cinto Rústico #0104</h4>
+                                <p class="text-[11px] text-amber-300/60">Cliente: João da Silva</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-3 bg-[#1a0f0a] p-2.5 rounded-lg border-l-4 border-emerald-500">
+                            <div class="text-center font-bold text-amber-300 w-10">
+                                <span class="block text-sm">28</span>
+                                <span class="text-[9px] uppercase">OUT</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-amber-100">Entrega: Bainha de Faca #0105</h4>
+                                <p class="text-[11px] text-amber-300/60">Cliente: Marcos Pampa</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-3 bg-[#1a0f0a] p-2.5 rounded-lg border-l-4 border-red-500">
+                            <div class="text-center font-bold text-amber-300 w-10">
+                                <span class="block text-sm">30</span>
+                                <span class="text-[9px] uppercase">OUT</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-red-300">Lembrete: Comprar Fivelas Inox</h4>
+                                <p class="text-[11px] text-amber-300/60">Estoque de aviamentos baixo</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Navigation Bar (Fixed Bottom) -->
+        <nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-[#1a0f0a] border-t border-[#5a3818] p-2 flex justify-around items-center z-50">
+            <button onclick="switchTab('dashboard')" id="nav-dashboard" class="flex flex-col items-center gap-1 text-leather-accent">
+                <i data-lucide="home" class="w-5 h-5"></i>
+                <span class="text-[10px] font-medium">Início</span>
+            </button>
+            <button onclick="switchTab('orders')" id="nav-orders" class="flex flex-col items-center gap-1 text-amber-200/50 hover:text-amber-200">
+                <i data-lucide="clipboard-list" class="w-5 h-5"></i>
+                <span class="text-[10px] font-medium">Pedidos</span>
+            </button>
+            <button onclick="switchTab('calculator')" id="nav-calculator" class="flex flex-col items-center gap-1 text-amber-200/50 hover:text-amber-200">
+                <i data-lucide="calculator" class="w-5 h-5"></i>
+                <span class="text-[10px] font-medium">Orçamento</span>
+            </button>
+            <button onclick="switchTab('schedule')" id="nav-schedule" class="flex flex-col items-center gap-1 text-amber-200/50 hover:text-amber-200">
+                <i data-lucide="calendar" class="w-5 h-5"></i>
+                <span class="text-[10px] font-medium">Agenda</span>
+            </button>
+        </nav>
+
+    </div>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Simple Tab Navigation System
+        function switchTab(tabId) {
+            const tabs = ['dashboard', 'calculator', 'orders', 'schedule'];
+            
+            tabs.forEach(tab => {
+                const element = document.getElementById(`tab-${tab}`);
+                const navBtn = document.getElementById(`nav-${tab}`);
+                
+                if (tab === tabId) {
+                    element.classList.remove('hidden');
+                    navBtn.className = "flex flex-col items-center gap-1 text-leather-accent font-bold";
+                } else {
+                    element.classList.add('hidden');
+                    navBtn.className = "flex flex-col items-center gap-1 text-amber-200/50 hover:text-amber-200";
+                }
+            });
+        }
+
+        // Leather Budget Calculation Logic
+        function calculatePrice() {
+            const leatherRate = parseFloat(document.getElementById('leather-type').value) || 0;
+            const leatherArea = parseFloat(document.getElementById('leather-area').value) || 0;
+            const hardware = parseFloat(document.getElementById('hardware-cost').value) || 0;
+            const supplies = parseFloat(document.getElementById('supplies-cost').value) || 0;
+            
+            const hourlyRate = parseFloat(document.getElementById('hourly-rate').value) || 0;
+            const hours = parseFloat(document.getElementById('production-hours').value) || 0;
+            
+            const profitMarginPercent = parseFloat(document.getElementById('profit-margin').value) || 0;
+            document.getElementById('margin-val').innerText = profitMarginPercent + '%';
+
+            // Calculations
+            const totalMaterials = (leatherRate * leatherArea) + hardware + supplies;
+            const totalLabor = hourlyRate * hours;
+            const baseCost = totalMaterials + totalLabor;
+            const overhead = baseCost * 0.10; // 10% overhead
+            const totalCost = baseCost + overhead;
+            
+            const finalPrice = totalCost * (1 + (profitMarginPercent / 100));
+
+            // UI Render
+            document.getElementById('res-materials').innerText = `R$ ${totalMaterials.toFixed(2)}`;
+            document.getElementById('res-labor').innerText = `R$ ${totalLabor.toFixed(2)}`;
+            document.getElementById('res-overhead').innerText = `R$ ${overhead.toFixed(2)}`;
+            document.getElementById('res-total').innerText = `R$ ${finalPrice.toFixed(2)}`;
+        }
+
+        // Initial Calculation Run
+        calculatePrice();
+    </script>
+</body>
+</html>
